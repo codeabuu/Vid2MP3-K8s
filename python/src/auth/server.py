@@ -58,7 +58,7 @@ def validate():
             encoded_jwt, os.environ.get("JWT_SECRET"), algorithm=["HS256"]
         )
     except:
-        return("Oops, not autorized!", 403)
+        return("Oops, not authhorized!", 403)
     return decoded, 200
 
  

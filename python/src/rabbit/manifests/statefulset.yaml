@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: rabbitmq
+  labels:
+    app: rabbitmq
+spec:
+  serviceName: "rabbitmq"  # This should match the headless service name used for StatefulSet
+  replicas: 3  # Number of RabbitMQ instances (adjust as needed)
+  selector:
+    matchLabels:
+      app: rabbitmq
+  template:
+    metadata:
+      labels:
+        app: rabbitmq
+    spec:
+      containers:
+      - name: rabbitmq
+        image: rabbitmq:3-management  # Official RabbitMQ image with management plugin
+        ports:
+        - name: management
+          containerPort: 15672
+        - name: amqp
+          containerPort: 5672
+        envFrom:
+          - configMapRef:
+              name: rabbitmq-configmap
+          - secretRef:
+              name: rabbitmq-secret
+        volumeMounts:
+          - mountPath: "/var/lib/rabbitmq"
+            name: rabbitmq-volume
+  volumeClaimTemplates:
+  - metadata:
+      name: rabbitmq-volume
+    spec:
+      accessModes: ["ReadWriteOnce"]
+      resources:
+        requests:
+          storage: 10Gi  # Adjust storage size as needed
