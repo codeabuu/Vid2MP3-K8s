@@ -8,6 +8,7 @@ def upload(f, fs, channel, access):
         fid = fs.put(f)
 
     except Exception as err:
+        print(err)
         return ("Internal server error", 500)
     
     message = {
@@ -25,6 +26,7 @@ def upload(f, fs, channel, access):
 
             ),
         )
-    except:
+    except Exception as err:
+        print(err)
         fs.delete(fid)
         return ("Internal Server Error!", 500)

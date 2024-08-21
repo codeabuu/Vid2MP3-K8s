@@ -1,4 +1,5 @@
 requests
 pika
 jedi
-pymongo
+flask_pymongo
+flask
