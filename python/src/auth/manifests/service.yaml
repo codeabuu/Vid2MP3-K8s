@@ -5,6 +5,7 @@ metadata:
 spec:
   selector:
     app: auth
+    
   type: ClusterIP
   ports:
     - port: 5000
